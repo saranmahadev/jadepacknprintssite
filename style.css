@@ -1,0 +1,193 @@
+:root {
+  --jade: #0a4d3c;
+  --jade-light: #1f9e73;
+  --jade-glow: #3ee0a8;
+  --gold: #d4af6a;
+  --ink: #eef5f1;
+  --card-bg: rgba(10, 20, 17, 0.55);
+  --card-border: rgba(62, 224, 168, 0.25);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  background: #040d0a;
+  color: var(--ink);
+  font-family: "Jost", sans-serif;
+  overflow: hidden;
+}
+
+#bg-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  display: block;
+}
+
+.hero {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.card {
+  width: 100%;
+  max-width: 480px;
+  text-align: center;
+  padding: clamp(28px, 6vw, 48px) clamp(20px, 6vw, 40px);
+  border-radius: 20px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 0 60px rgba(62, 224, 168, 0.12), 0 20px 60px rgba(0, 0, 0, 0.5);
+  animation: rise 1s cubic-bezier(.19,1,.22,1) both;
+}
+
+.eyebrow {
+  font-family: "Cormorant Garamond", serif;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-size: clamp(0.75rem, 2vw, 0.9rem);
+  color: var(--gold);
+  animation: fadeIn 1s ease 0.15s both;
+}
+
+.coming-soon {
+  margin-top: 10px;
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 600;
+  font-size: clamp(2.2rem, 8vw, 3.4rem);
+  line-height: 1.05;
+}
+
+.coming-soon span {
+  display: inline-block;
+  background: linear-gradient(120deg, var(--ink), var(--jade-glow));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  opacity: 0;
+  transform: translateY(18px);
+  animation: wordUp 0.8s ease forwards;
+}
+
+.coming-soon span:nth-child(1) { animation-delay: 0.35s; }
+.coming-soon span:nth-child(2) { animation-delay: 0.55s; }
+
+.tagline {
+  margin-top: 12px;
+  font-size: clamp(0.85rem, 2.2vw, 1rem);
+  color: rgba(238, 245, 241, 0.7);
+  animation: fadeIn 1s ease 0.8s both;
+}
+
+.contact {
+  margin-top: clamp(24px, 5vw, 34px);
+  padding-top: clamp(20px, 5vw, 28px);
+  border-top: 1px solid var(--card-border);
+  animation: fadeIn 1s ease 1s both;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 16px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--jade-glow);
+  background: rgba(62, 224, 168, 0.1);
+  border: 1px solid rgba(62, 224, 168, 0.4);
+  animation: pulseGlow 2.4s ease-in-out infinite;
+}
+
+.badge-check {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.contact-info {
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  font-size: clamp(0.95rem, 2.4vw, 1.05rem);
+}
+
+.row dt {
+  color: rgba(238, 245, 241, 0.55);
+  font-weight: 400;
+}
+
+.row dd {
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.row dd a {
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(238, 245, 241, 0.3);
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.row dd a:hover,
+.row dd a:focus-visible {
+  color: var(--jade-glow);
+  border-color: var(--jade-glow);
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(40px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes wordUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(62, 224, 168, 0.35); }
+  50% { box-shadow: 0 0 0 6px rgba(62, 224, 168, 0); }
+}
+
+@media (max-width: 380px) {
+  .row { flex-direction: column; gap: 2px; text-align: left; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card, .coming-soon span, .tagline, .contact, .badge {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
