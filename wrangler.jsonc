@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "jadepacknprintssite",
+  "name": "jadepacknprints",
   "compatibility_date": "2026-10-06",
   "observability": {
     "enabled": true
