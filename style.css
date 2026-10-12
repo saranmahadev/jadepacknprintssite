@@ -34,8 +34,10 @@ html, body {
   z-index: 1;
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: clamp(18px, 4vw, 28px);
   padding: 24px;
 }
 
@@ -61,15 +63,15 @@ html, body {
   animation: fadeIn 1s ease 0.15s both;
 }
 
-.coming-soon {
+.headline {
   margin-top: 10px;
   font-family: "Cormorant Garamond", serif;
   font-weight: 600;
-  font-size: clamp(2.2rem, 8vw, 3.4rem);
+  font-size: clamp(2rem, 7vw, 3.1rem);
   line-height: 1.05;
 }
 
-.coming-soon span {
+.headline span {
   display: inline-block;
   background: linear-gradient(120deg, var(--ink), var(--jade-glow));
   -webkit-background-clip: text;
@@ -80,8 +82,8 @@ html, body {
   animation: wordUp 0.8s ease forwards;
 }
 
-.coming-soon span:nth-child(1) { animation-delay: 0.35s; }
-.coming-soon span:nth-child(2) { animation-delay: 0.55s; }
+.headline span:nth-child(1) { animation-delay: 0.35s; }
+.headline span:nth-child(2) { animation-delay: 0.55s; }
 
 .tagline {
   margin-top: 12px;
@@ -90,75 +92,107 @@ html, body {
   animation: fadeIn 1s ease 0.8s both;
 }
 
-.contact {
-  margin-top: clamp(24px, 5vw, 34px);
-  padding-top: clamp(20px, 5vw, 28px);
-  border-top: 1px solid var(--card-border);
-  animation: fadeIn 1s ease 1s both;
+.contact-card {
+  animation: rise 1s cubic-bezier(.19,1,.22,1) 0.25s both;
 }
 
-.badge {
-  display: inline-flex;
+.contact-heading {
+  display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 6px 16px;
-  border-radius: 999px;
-  font-size: 0.8rem;
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--jade-glow);
-  background: rgba(62, 224, 168, 0.1);
-  border: 1px solid rgba(62, 224, 168, 0.4);
-  animation: pulseGlow 2.4s ease-in-out infinite;
+  justify-content: center;
+  gap: 8px;
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 600;
+  font-size: clamp(1.2rem, 3.5vw, 1.5rem);
+  color: var(--ink);
+  animation: fadeIn 1s ease 0.4s both;
 }
 
-.badge-check {
-  width: 14px;
-  height: 14px;
+.pin-icon {
+  width: 18px;
+  height: 18px;
   fill: none;
-  stroke: currentColor;
-  stroke-width: 2.5;
+  stroke: var(--gold);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  animation: pinBounce 2.6s ease-in-out infinite;
+}
+
+.contact-info {
+  margin-top: clamp(20px, 5vw, 28px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(16px, 4vw, 22px);
+  text-align: left;
+  font-style: normal;
+}
+
+.contact-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: clamp(0.95rem, 2.4vw, 1.05rem);
+  opacity: 0;
+  transform: translateY(14px);
+  animation: rowIn 0.7s ease forwards;
+}
+
+.name-row { animation-delay: 0.55s; }
+.address-row { animation-delay: 0.75s; }
+.phone-row { animation-delay: 0.95s; }
+
+.row-icon {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  fill: none;
+  stroke: var(--jade-glow);
+  stroke-width: 1.8;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 
-.contact-info {
-  margin-top: 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+.contact-row p {
+  color: rgba(238, 245, 241, 0.85);
+  line-height: 1.55;
 }
 
-.row {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 12px;
-  font-size: clamp(0.95rem, 2.4vw, 1.05rem);
-}
-
-.row dt {
-  color: rgba(238, 245, 241, 0.55);
-  font-weight: 400;
-}
-
-.row dd {
+.name-row span {
   font-weight: 600;
   letter-spacing: 0.01em;
 }
 
-.row dd a {
+.phone-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   color: var(--ink);
+  font-weight: 600;
+  letter-spacing: 0.02em;
   text-decoration: none;
   border-bottom: 1px solid rgba(238, 245, 241, 0.3);
   transition: color 0.2s ease, border-color 0.2s ease;
 }
 
-.row dd a:hover,
-.row dd a:focus-visible {
+.phone-link:hover,
+.phone-link:focus-visible {
   color: var(--jade-glow);
   border-color: var(--jade-glow);
+}
+
+.phone-pulse {
+  position: absolute;
+  left: -14px;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  margin-top: -4px;
+  border-radius: 50%;
+  background: var(--jade-glow);
+  animation: pulseGlow 2.4s ease-in-out infinite;
 }
 
 @keyframes rise {
@@ -170,22 +204,32 @@ html, body {
   to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes rowIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
 }
 
 @keyframes pulseGlow {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(62, 224, 168, 0.35); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(62, 224, 168, 0.45); }
   50% { box-shadow: 0 0 0 6px rgba(62, 224, 168, 0); }
 }
 
+@keyframes pinBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
 @media (max-width: 380px) {
-  .row { flex-direction: column; gap: 2px; text-align: left; }
+  .contact-row { gap: 10px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .card, .coming-soon span, .tagline, .contact, .badge {
+  .card, .contact-card, .headline span, .tagline, .contact-heading,
+  .pin-icon, .contact-row, .phone-pulse {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
